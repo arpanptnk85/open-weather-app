@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>App | Open Weather</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post">
+            <input type="text" name="city" placeholder="Enter City" required>
+            <button type="submit">Get Weather</button>
+        </form>
+    </div>
+
+    {% if data %}
+    <div class="container">
+        <h1>Weather Report for {{ data.name }}, {{ data.sys.country }}</h1>
+        <p><span>Latitude:</span> {{ data.coord.lat }} | <span>Longitude:</span> {{ data.coord.lon }}</p>
+        <p><span>Temperature:</span> {{ data.main.temp }}°C</p>
+        <p><span>Feels Like:</span> {{ data.main.feels_like }}°C</p>
+        <p><span>Humidity:</span> {{ data.main.humidity }}%</p>
+        <p><span>Pressure:</span> {{ data.main.pressure }} hPa</p>
+        <p><span>Visibility:</span> {{ data.visibility }} meters</p>
+        <p><span>Weather:</span> {{ data.weather[0].main }} ({{ data.weather[0].description }})</p>
+        <img class="weather-icon" src="http://openweathermap.org/img/wn/{{ data.weather[0].icon }}@2x.png" alt="{{ data.weather[0].description }}">
+        <p><span>Wind:</span> {{ data.wind.speed }} m/s at {{ data.wind.deg }}°</p>
+        <p><span>Cloud Cover:</span> {{ data.clouds.all }}%</p>
+        <p><span>Sunrise:</span> {{ data.sys.sunrise | datetimeformat }}</p>
+        <p><span>Sunset:</span> {{ data.sys.sunset | datetimeformat }}</p>
+    </div>
+    {% endif %}
+    
+</body>
+</html>
